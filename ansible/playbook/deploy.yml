@@ -1,0 +1,4 @@
+- name: Deploy Cluster API Outscale
+  hosts: localhost
+  roles:
+    - role: deploy

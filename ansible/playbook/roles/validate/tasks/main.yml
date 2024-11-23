@@ -1,0 +1,36 @@
+---
+# Validate Clusters
+- name: Verify that clusters are created
+  kubernetes.core.k8s_info``:
+    api_version: cluster.x-k8s.io/v1beta1
+    kind: Cluster
+  register: cluster_status
+
+- name: Fail if no clusters are found
+  ansible.builtin.fail:
+    msg: "No clusters found in the system."
+  when: cluster_status.resources | length == 0
+
+# Validate OSCClusters
+- name: Verify OSCCluster resources
+  kubernetes.core.k8s_info`:
+    api_version: infrastructure.cluster.x-k8s.io/v1beta1
+    kind: OSCCluster
+  register: osccluster_status
+
+- name: Fail if no OSCCluster resources are found
+  ansible.builtin.fail:
+    msg: "No OSCCluster resources found."
+  when: osccluster_status.resources | length == 0
+
+# Validate Machines
+- name: Verify Machines existence
+  kubernetes.core.k8s_info`:
+    api_version: cluster.x-k8s.io/v1beta1
+    kind: Machine
+  register: machines_status
+
+- name: Fail if no machines are found
+  ansible.builtin.fail:
+    msg: "No machines found in the system."
+  when: machines_status.resources | length == 0

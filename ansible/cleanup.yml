@@ -1,0 +1,18 @@
+---
+- name: Cleanup Cluster API Outscale
+  hosts: localhost
+  tasks:
+    # Uninstall Helm Chart
+    - name: Uninstall Helm chart
+      community.general.helm:
+        release_name: cluster-api-provider-outscale
+        namespace: cluster-api-outscale-system
+        state: absent
+
+    # Delete Namespace
+    - name: Delete namespace
+      community.kubernetes.k8s:
+        api_version: v1
+        kind: Namespace
+        name: cluster-api-outscale-system
+        state: absent

@@ -1,0 +1,5 @@
+---
+validate_namespace: cluster-api-outscale-system
+validate_helm_chart: ./helm/clusterapioutscale/
+validate_release_name: cluster-api-provider-outscale
+

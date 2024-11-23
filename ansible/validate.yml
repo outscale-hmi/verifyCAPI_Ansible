@@ -1,0 +1,51 @@
+---
+- name: Validate Cluster API Outscale Deployment
+  hosts: localhost
+  tasks:
+    # Check Pods in Namespace
+    - name: Check running pods in the namespace
+      ansible.builtin.shell: |
+        kubectl get pods -n cluster-api-outscale-system
+      register: pod_status
+      changed_when: false  # This task doesn't change anything
+
+    - name: Ensure all pods are running
+      ansible.builtin.fail:
+        msg: "Some pods in the cluster-api-outscale-system namespace are not running."
+      when: pod_status.stdout | regex_search("Running") is not defined
+
+    # Check Clusters
+    - name: Verify Clusters existence
+      ansible.builtin.shell: |
+        kubectl get clusters -A
+      register: cluster_status
+      changed_when: false  # This task doesn't change anything
+
+    - name: Ensure clusters are present
+      ansible.builtin.fail:
+        msg: "No clusters are found in the system."
+      when: cluster_status.stdout | length == 0
+
+    # Check OSCCluster Resources
+    - name: Verify OSCCluster resources
+      ansible.builtin.shell: |
+        kubectl get oscclusters -A
+      register: osccluster_status
+      changed_when: false  # This task doesn't change anything
+
+    - name: Ensure OSCClusters are present
+      ansible.builtin.fail:
+        msg: "No OSCCluster resources found."
+      when: osccluster_status.stdout | length == 0
+
+    # Check Machines
+    - name: Verify Machines existence
+      ansible.builtin.shell: |
+        kubectl get machines -A
+      register: machines_status
+      changed_when: false  # This task doesn't change anything
+
+    - name: Ensure machines are present
+      ansible.builtin.fail:
+        msg: "No machines are found in the system."
+      when: machines_status.stdout | length == 0

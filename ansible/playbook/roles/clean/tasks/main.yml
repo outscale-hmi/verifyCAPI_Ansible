@@ -1,0 +1,6 @@
+---
+- name: Uninstall Helm chart
+  community.general.helm:
+    release_name: cluster-api-provider-outscale
+    namespace: cluster-api-outscale-system
+    state: absent

@@ -1,0 +1,14 @@
+---
+- name: Get current status of Kubernetes API Server deployment
+  ansible.builtin.command:
+    cmd: kubectl get deployment kube-apiserver -o jsonpath='{.status.replicas}'
+  register: deployment_status
+  changed_when: false
+
+- name: Restart Kubernetes API Server if necessary
+  ansible.builtin.command:
+    cmd: kubectl rollout restart deployment/kube-apiserver
+  when: deployment_status.stdout | int > 0
+  register: restart_result
+  failed_when: restart_result.rc != 0
+  changed_when: "'Restarted' in restart_result.stdout or 'updated' in restart_result.stdout"

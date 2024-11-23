@@ -1,0 +1,4 @@
+---
+namespace: cluster-api-outscale-system
+release_name: cluster-api-provider-outscale
+

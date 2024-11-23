@@ -1,0 +1,34 @@
+---
+- name: Create namespace for Cluster API Outscale
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: Namespace
+    name: "{{ namespace }}"
+    state: present
+  register: namespace_result
+
+- name: Add label to namespace
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: Namespace
+    name: "{{ namespace }}"
+    merge_type: merge
+    resource_definition:
+      metadata:
+        labels:
+          control-plane: "{{ release_name }}"
+
+- name: Deploy Cluster API Outscale Helm chart
+  community.general.helm:
+  helm:
+    name: "{{ deploy_release_name }}"
+    chart: "{{ deploy_helm_chart }}"
+    namespace: "{{ namespace }}"
+    state: present
+  vars:
+    release_name: cluster-api-provider-outscale
+    helm_chart: ./helm/clusterapioutscale
+    namespace: cluster-api-outscale-system
+
+- name: Notify to restart Kubernetes components
+  notify: Restart Kubernetes API Server

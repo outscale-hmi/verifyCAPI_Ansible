@@ -1,0 +1,5 @@
+---
+- name: Validate Cluster API Outscale Deployment
+  hosts: localhost
+  roles:
+    - validate

@@ -1,0 +1,7 @@
+---
+- name: Run Clean Role
+  hosts: localhost
+  tasks:
+    - name: Import Clean Role
+      ansible.builtin.import_role:
+        name: /home/outscale/perso/ansible-workflow-k8s/ansible/roles/clean
