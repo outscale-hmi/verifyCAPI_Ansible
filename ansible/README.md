@@ -1,35 +1,6 @@
 # ansible-workflow-k8s
-```
-project-root/
-├── ansible/
-│   ├── playbooks/
-│   │   ├── deploy.yml          # Playbook to deploy the Outscale provider
-│   │   ├── validate.yml        # Playbook to validate the deployment
-│   │   ├── cleanup.yml         # Playbook to clean up resources
-│   ├── roles/
-│   │   ├── deploy/
-│   │   │   ├── defaults/
-│   │   │   │   └── main.yml    # Default variables
-│   │   │   ├── tasks/
-│   │   │   │   └── main.yml    # Main tasks for deployment
-│   │   │   ├── handlers/
-│   │   │   │   └── main.yml    # Handlers for deployment
-│   │   │   ├── templates/
-│   │   │   │   └── kubeconfig.j2 # (Optional) Template for kubeconfig
-│   │   │   └── README.md       # Documentation for the role
-│   │   ├── validate/
-│   │   │   ├── tasks/
-│   │   │   │   └── main.yml    # Main tasks for validation
-│   │   ├── cleanup/
-│   │   │   ├── tasks/
-│   │   │   │   └── main.yml    # Main tasks for cleanup
-│   ├── inventory/
-│   │   └── hosts.ini           # Inventory file for localhost
-│   └── ansible.cfg             # Configuration file for Ansible
 
-
-```
-# Cluster API Outscale CI/CD
+## Cluster API Outscale CI/CD
 
 This repository provides a CI/CD pipeline for testing the Cluster API Outscale Helm chart.
 
